@@ -133,6 +133,17 @@ However, since Pioneers works with Python (3, not dinopython) and Git,
 you will need to get those two installed on your system.
 On windows, cygwin or powershell are probably necessary.
 
+### Recipe to be a pioneer
+
+1. install `pioneers.py` in your SpaceEngine install folder, and run it (it will initialize repository and files).
+2. run SpaceEngine, and goto a system.
+3. Only one time: do not forget to set your name in the SpaceEngine options: escape, *settings*, *player*. Set the nickname accordingly, and your good to go.
+4. select the parent object (the star in most cases, but in binary systems it's a barycenter), and goto *wiki* (the stylized *i* on the left menu)
+5. hit *edit* then *save*. Now your name should appear for the object (and the full system). You can verify that the database file contains this information (last lines of `config/user-eng-db.cfg`).
+6. close SpaceEngine (needed because it will overwrite the file when stopping).
+7. run the `pioneers.py` script (it will detect, process and commit the changes you've made).
+8. Repeat at will !
+
 ## Contribute
 There is plenty of way to contribute. Use [the issues system](https://github.com/aluriak/se-pioneers/issues) of this repository as a primary way to discuss about the project
 and for technical remarks/feedback/ideas.
