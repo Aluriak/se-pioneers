@@ -1,0 +1,118 @@
+# Pioneers
+An attempt to implement (asynchronous) multi-players exploration on SpaceEngine,
+with python scripts outside of SpaceEngine itself.
+
+**This is a proof of concept**, directed mostly toward peoples that want to experiment
+a somewhat social experience, not a production/guarantee-to-work service.
+
+
+
+## The Pioneers project
+
+### Why Pioneers
+Space Engine is a wonderful simulator, and the gargantuan dimensions of space,
+made it absolutely full of awe.
+
+Now, i want to get a more real feeling of *exploration*, not just space,
+and IMHO a way to achieve this is by adding a small social counterpart
+to the exploration.
+It is somewhat implemented through [r/spaceengine](https://www.reddit.com/r/spaceengine/),
+but in the end, all discoveries are lost in the reddit depths, without real impact in-game.
+
+With Pioneers, i want to achieve a real tool for exploring and creating, included in the game itself.
+
+
+#### Applications
+Feel less alone in space, be a member of a persistant world.
+
+Have a representation of the SpaceEngine universe, where discovered places are shown, maybe showing visible patterns of exploration.
+
+Propose an adventure inside SpaceEngine : starting at a particular place, the player has to find clues in the star/planet description
+in order to find the next star to go to.
+It could be easy, just to support an immersive naration, following the path of an ancient explorer for instance.
+Like a book with wonderful illustrations.
+
+
+### Future work
+The first obvious area of work is to determine if there is enthousiasts like me about this sort of feature,
+and maybe starting a community work around Pioneers. Perhaps, someday, we will see an incorporation of some features
+in SpaceEngine that could replace/integrate/help this proof of concept (like a wiki accessible/editable in-game, or an API).
+
+Also, the context system for music could allow one to link a music to a planet. One step further for the story narration idea.
+
+
+### Core principle
+When you save a description for an object in SpaceEngine, it populates a file named `config/user-eng-db.cfg`,
+containing lines like:
+
+    PObject
+    {
+            LocName "RS 0-4-1388-500-11085-8-6447711-79"
+            Name    "RS 0-4-1388-500-11085-8-6447711-79"
+            Pioneer "lucas"
+            Date    "2017.10.17 20:55:59.13"
+            Descr   "Testing the saving framework for Pioneers"
+    }
+
+You can try this yourself : copy-paste these lines in your file (which probably already exists, even if empty),
+restart SpaceEngine, and go see the object's description in-game.
+
+So, now, we need:
+- an automated way to collect these lines and the file among explorers (the users who wants to participate)
+- an automated way to build the total pioneers' `config/user-eng-db.cfg` file (let's call it the *Pioneers database*)
+- an automated way to distribute it accross explorers
+
+And these three items are implemented using two technologies : git and python.
+Git will be the one taking care of managing the Pioneers database,
+with all discoveries of all explorers.
+Python is all about how automate it all.
+
+
+## What is this repository, technically
+[This repository](https://github.com/aluriak/se-pioneers) contains:
+
+- the python scripts
+- this readme, and hopefully other tutorials for explorers
+- the issues system, for questions and remarks
+
+For security concerns, the database file is [in another repository](https://github.com/aluriak/se-pioneers-db).
+
+
+### Access
+In order to *use* the Pioneers database, no access right is needed. You just have to download
+and use the [Pioneers database file](https://github.com/aluriak/se-pioneers-db).
+
+However, if you want to participate as an explorer,
+you have to register to github, then, with your account
+and via the issues, request to be marked as collaborator.
+Once here, you will be able to run the scripts to upload your own discoveries.
+
+
+### Scripts
+`pioneers.py` is the python script that automate all the treatments :
+- initializing the Pioneers database
+- detecting, committing and pushing (publishing) discoveries of users
+
+Various notes:
+
+It uses (currently) only the standard library, but needs git to be installed on the system.
+It suffers of many caveats and imprecisions, but is enough for very basic behaviors.
+It probably do not scale and certainly do not handle conflict, but at least it's here,
+ready to be improved.
+Many paths of improvements are directly written in the script itself. Take a look !
+
+Also, `pioneers.py` accept a CLI parameter `--remote` allowing one to specify
+the repository to consider as remote instead of [the default one](https://github.com/aluriak/se-pioneers-db).
+(i personnally use this to specify remote via ssh protocol, allowing me to avoid username/password prompt when pushing)
+
+You can therefore deploy your own Pioneers database without touching a line of code.
+
+
+### Technical limitations and future improvements
+Currently, using github as centralized repository let me oversee many details,
+but in the end it is not the best solution, and not really scalable.
+
+Also, there is many problems with the current python script, mainly about
+the concurrency access to the database that could lead to merge conflicts.
+In a bright and hopeful future, the script will be able to avoid data duplication
+and handle conflicts properly.
