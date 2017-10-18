@@ -38,6 +38,9 @@ def cli_args():
     # parser.add_argument('--watch', type=bool, action='store_true',
                         # default=False,
                         # help='Wait any modification of the database, push it immediately.')
+    parser.add_argument('--show-discoveries', action='store_true',
+                        default=False,
+                        help='Show the lines added to the database')
     return parser.parse_args()
 
 
@@ -143,7 +146,7 @@ def verified_discoveries(added_text:str) -> bool:
     return True
 
 
-def integrate_discoveries_to_pioneers() -> bool:
+def integrate_discoveries_to_pioneers(show_discoveries:bool=False) -> bool:
     """If user modified its database while gaming (by marking systems
     as discovered, for instance), this function will retrieve and commit
     the diff on the Pioneers database.
@@ -156,6 +159,10 @@ def integrate_discoveries_to_pioneers() -> bool:
     """
     update_repository()
     discoveries = ''.join(user_discoveries())
+    if show_discoveries and discoveries:
+        print()
+        print(discoveries)
+        print()
     if discoveries and verified_discoveries(discoveries):
         print("Discoveries will be commited to remote repository…")
         # SpaceEngine add the last modification in the end
@@ -198,4 +205,4 @@ if __name__ == "__main__":
     args = cli_args()
     # print(args)
     initialize(remote_url=args.remote)
-    integrate_discoveries_to_pioneers()
+    integrate_discoveries_to_pioneers(args.show_discoveries)
