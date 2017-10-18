@@ -10,6 +10,7 @@ import os
 import re
 import shutil
 import difflib
+import tempfile
 import argparse
 import subprocess
 from collections import Counter
@@ -150,16 +151,22 @@ def integrate_discoveries_to_pioneers() -> bool:
 
     """
     update_repository()
-    discoveries = ''.join(user_discoveries())
+    discoveries = ''.join(line for line in user_discoveries() if line.strip())
     if discoveries and verified_discoveries(discoveries):
-        # commit and push
         print("Discoveries will be commited to remote repository…")
-        # TODO: note that SpaceEngine add the last modification in the end
+        # SpaceEngine add the last modification in the end
         # of the file, meaning that last modification is the one to keep.
-        # However, in Pioneers system, it should be the opposite:
+        # However, in Pioneers system, it is the opposite:
         #  the first explorer is the preferred version.
-        # This could be implemented by a post-processing of the database file.
-        shutil.copy(DATABASE_FILE, LOCAL_GIT_DB)
+        # This is implemented by adding the discoveries on top of the database file,
+        #  instead of the end like SpaceEngine do.
+        with tempfile.NamedTemporaryFile('w', delete=False) as fd, open(LOCAL_GIT_DB) as fref:
+            fd.write(discoveries)
+            fd.write(fref.read())
+            # use the tempfile as local database
+            tempname = fd.name
+        shutil.move(tempname, LOCAL_GIT_DB)
+        shutil.copy(LOCAL_GIT_DB, DATABASE_FILE)
         commit_and_push(commit_message_from_addendum(discoveries))
         return True
     return False
