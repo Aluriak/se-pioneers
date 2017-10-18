@@ -5,6 +5,7 @@ with python scripts outside of SpaceEngine itself.
 **This is a proof of concept**, directed mostly toward peoples that want to experiment
 a somewhat social experience, not a production/guarantee-to-work service.
 
+If you want to contribute or participate, [it's here](https://github.com/Aluriak/se-pioneers#how-to).
 
 
 ## The Pioneers project
@@ -116,3 +117,22 @@ Also, there is many problems with the current python script, mainly about
 the concurrency access to the database that could lead to merge conflicts.
 In a bright and hopeful future, the script will be able to avoid data duplication
 and handle conflicts properly.
+
+
+# How To…
+
+## Participate
+First, you need a github account, and request to be contributor of the [database repository](https://github.com/aluriak/se-pioneers-db) via [the issues](https://github.com/Aluriak/se-pioneers-db/issues).
+
+Once a contributor, you will be able to send commit on the repository,
+and therefore add your discoveries using the `pioneers.py` script (which should be placed in your SpaceEngine install directory).
+
+### requirements and OS support
+I do not have a windows or a macos to test the script on these environments.
+However, since Pioneers works with Python (3, not dinopython) and Git,
+you will need to get those two installed on your system.
+On windows, cygwin or powershell are probably necessary.
+
+## Contribute
+There is plenty of way to contribute. Use [the issues system](https://github.com/aluriak/se-pioneers/issues) of this repository as a primary way to discuss about the project
+and for technical remarks/feedback/ideas.
