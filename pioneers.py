@@ -117,7 +117,11 @@ def user_discoveries() -> [str]:
         # comparison = tuple(comparison) ; print(comparison)  # debug
         states, lines = zip(*((line[0], line) for line in comparison))
         counts = Counter(states)
-        print("Modifications: " + ', '.join('{} {}'.format(v, DIFFLIB_TO_HUMAN[k]) for k, v in counts.items()))
+        if len(counts) == 1 and counts.get(' '):
+            print("No modification. Nothing to do.")
+            return
+        else:
+            print("Modifications: " + ', '.join('{} {}'.format(v, DIFFLIB_TO_HUMAN[k]) for k, v in counts.items()))
     if counts.get('-'):
         print("Lines have been deleted. That's unexpected ! No modification is considered valid.")
     elif counts.get('+'):
@@ -151,7 +155,7 @@ def integrate_discoveries_to_pioneers() -> bool:
 
     """
     update_repository()
-    discoveries = ''.join(line for line in user_discoveries() if line.strip())
+    discoveries = ''.join(user_discoveries())
     if discoveries and verified_discoveries(discoveries):
         print("Discoveries will be commited to remote repository…")
         # SpaceEngine add the last modification in the end
