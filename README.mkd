@@ -2,6 +2,8 @@
 An attempt to implement (asynchronous) multi-players exploration on SpaceEngine,
 with python scripts outside of SpaceEngine itself.
 
+(now with a [GUI](https://github.com/Aluriak/se-pioneers#gui) !)
+
 **This is a proof of concept**, directed mostly toward peoples that want to experiment
 a somewhat social experience, not a production/guarantee-to-work service.
 
@@ -117,7 +119,11 @@ in order to implement a user-friendly interface.
 It also features a generally better implementation of Pioneers system.
 
 #### GUI
-A Graphical User Interface is also on its way.
+A very basic Graphical User Interface is also implemented,
+and mimics the high-level behavior of scripts.
+
+It's based on tkinter (therefore multiplatform),
+and explains to user what it is doing, step by step.
 
 
 ### Technical limitations and future improvements
