@@ -90,6 +90,7 @@ Once here, you will be able to run the scripts to upload your own discoveries.
 
 
 ### Scripts
+#### Low-level
 `pioneers.py` is the python script that automate all the treatments :
 - initializing the Pioneers database
 - detecting, committing and pushing (publishing) discoveries of users
@@ -107,6 +108,16 @@ the repository to consider as remote instead of [the default one](https://github
 (i personnally use this to specify remote via ssh protocol, allowing me to avoid username/password prompt when pushing)
 
 You can therefore deploy your own Pioneers database without touching a line of code.
+
+#### High-level
+`pioneers_high.py` is a python script built in parallel of the low-level implementation,
+using the other scripts (`constants.py`, `routines.py` and `gitctl.py`)
+in order to implement a user-friendly interface.
+
+It also features a generally better implementation of Pioneers system.
+
+#### GUI
+A Graphical User Interface is also on its way.
 
 
 ### Technical limitations and future improvements
