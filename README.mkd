@@ -122,6 +122,8 @@ It also features a generally better implementation of Pioneers system.
 A very basic Graphical User Interface is also implemented,
 and mimics the high-level behavior of scripts.
 
+![gui showcase](res/gui_showcase.png)
+
 It's based on tkinter (therefore multiplatform),
 and explains to user what it is doing, step by step.
 
